@@ -43,7 +43,7 @@ ImageLoader::ImageLoader() {
 
 	#ifdef QUICK_AND_DIRTY_ACCESS // O(1) access of colors by id
 	this->colorsId.resize(MAGIC_ID_ALLOC);
-	for (int i = 0; i < this->colors.size(); i++) {
+	for (uint8_t i = 0; i < this->colors.size(); i++) {
 		this->colorsId[COLOR_UINT_CAST(this->colors[i])/MAGIC_DIVIDER] = i;
 	}
 	#else // very slow map
@@ -103,6 +103,7 @@ void ImageLoader::loadImage(const std::string& filename) {
 
 	std::cout << "Data fully loaded.\n";
 }
+
 void ImageLoader::_loadIdImage(std::vector<uint8_t>& dst, const std::string& filename, unsigned int& width, unsigned int& height) {
 	//open binary file
 	std::ifstream file(filename, std::ios::binary);
@@ -115,18 +116,12 @@ void ImageLoader::_loadIdImage(std::vector<uint8_t>& dst, const std::string& fil
 }
 
 void ImageLoader::_convertImage(std::vector<uint8_t>& dst, const std::string& filename, unsigned int& width, unsigned int& height) {
-	std::vector<unsigned char> image_data; //the raw pixels
-
-	//decode
+	std::vector<unsigned char> image_data;//RGBA
 	unsigned error = lodepng::decode(image_data, width, height, filename);
-
-	//if there's an error, display it
 	if (error) {
 		std::cout << "decoder error " << error << ": " << lodepng_error_text(error) << std::endl;
 		std::exit(1);
 	}
-
-	//the pixels are now in the vector "image", 4 bytes per pixel, ordered RGBARGBA..., use it as texture, draw it, ...
 	std::cout << "width: " << width << " height: " << height << std::endl;
 
 #ifndef PREBUILT_COLORS

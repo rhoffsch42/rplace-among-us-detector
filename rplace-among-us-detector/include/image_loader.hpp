@@ -37,7 +37,7 @@ public:
 	std::vector< std::vector<uint8_t> >		data;
 	std::vector<Color>						colors;
 	#ifdef QUICK_AND_DIRTY_ACCESS
-	std::vector<unsigned int>				colorsId;
+	std::vector<uint8_t>					colorsId;
 	#else
 	std::map<Color, uint8_t>				colorsId;
 	#endif
