@@ -6,40 +6,7 @@
 #include "image_loader.hpp"
 #include "amongus_detector.hpp"
 
-
-struct ColorSmall {
-	unsigned char r = 0;
-	unsigned char g = 0;
-	unsigned char b = 0;
-	//unsigned char a = 0;
-};
-struct ColorFull {
-	unsigned char r = 0;
-	unsigned char g = 0;
-	unsigned char b = 0;
-	unsigned char a = 0;
-};
-
 int	main(unsigned int argc, char **argv) {
-//#define TESTTT
-#ifdef TESTTT
-	
-	ColorFull	c0 = { 0, 0, 0, 0 };
-	ColorSmall	c1 = { 255, 255, 255 };
-	ColorFull	c2 = { 255, 255, 255, 255 };
-	ColorFull	c3 = { 255, 255, 255, 255 };
-	
-	//std::cout << ((*(unsigned int*)(&c0)) >> 0) << std::endl;
-	std::cout << ((*(unsigned int*)(&c1)) << (8) >> 8) << std::endl;
-	std::cout << ((*(unsigned int*)(&c1)) & 0x00ffffff) << std::endl;
-	//std::cout << ((*(unsigned int*)(&c2)) >> 8) << std::endl;
-	//std::cout << ((*(unsigned int*)(&c3)) >> 0) << std::endl;
-
-	std::cout << (256*256*255 + 256*255 + 255) << std::endl;
-
-	std::exit(0);
-#endif
-
 	std::cout << "Current working directory: " << std::filesystem::current_path() << "\n";
 
 #define USE_ARG
