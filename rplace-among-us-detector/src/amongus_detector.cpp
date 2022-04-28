@@ -560,28 +560,19 @@ void	AmongUsDetector::generateImage(const std::string& filename) {
 unsigned int AmongUsDetector::getImageWidth() const { return this->_image.width; }
 unsigned int AmongUsDetector::getImageHeight() const { return this->_image.height; }
 
+unsigned int AmongUsDetector::_getAmountForProcess(const MatchProcess& process) const {
+	return process.shapes[FULLY_R].size() +
+		process.shapes[FULLY_L].size() +
+		process.shapes[MOSTLY_R].size() +
+		process.shapes[MOSTLY_L].size();
+}
 unsigned int AmongUsDetector::getAmount(const char *logfile) const {
-	unsigned int clr_amongus =
-		this->_process[CLR_AMONGUS].shapes[FULLY_R].size() +
-		this->_process[CLR_AMONGUS].shapes[FULLY_L].size() +
-		this->_process[CLR_AMONGUS].shapes[MOSTLY_R].size() +
-		this->_process[CLR_AMONGUS].shapes[MOSTLY_L].size();
-	unsigned int clr_minimongus =
-		this->_process[CLR_MINIMONGUS].shapes[FULLY_R].size() +
-		this->_process[CLR_MINIMONGUS].shapes[FULLY_L].size() +
-		this->_process[CLR_MINIMONGUS].shapes[MOSTLY_R].size() +
-		this->_process[CLR_MINIMONGUS].shapes[MOSTLY_L].size();
-	unsigned int clr_amongus_nobag =
-		this->_process[CLR_AMONGUS_NOBAG].shapes[FULLY_R].size() +
-		this->_process[CLR_AMONGUS_NOBAG].shapes[FULLY_L].size() +
-		this->_process[CLR_AMONGUS_NOBAG].shapes[MOSTLY_R].size() +
-		this->_process[CLR_AMONGUS_NOBAG].shapes[MOSTLY_L].size();
-	unsigned int clr_minimongus_nobag =
-		this->_process[CLR_MINIMONGUS_NOBAG].shapes[FULLY_R].size() +
-		this->_process[CLR_MINIMONGUS_NOBAG].shapes[FULLY_L].size() +
-		this->_process[CLR_MINIMONGUS_NOBAG].shapes[MOSTLY_R].size() +
-		this->_process[CLR_MINIMONGUS_NOBAG].shapes[MOSTLY_L].size();
+	unsigned int clr_amongus = this->_getAmountForProcess(this->_process[CLR_AMONGUS]);
+	unsigned int clr_minimongus = this->_getAmountForProcess(this->_process[CLR_MINIMONGUS]);
+	unsigned int clr_amongus_nobag = this->_getAmountForProcess(this->_process[CLR_AMONGUS_NOBAG]);
+	unsigned int clr_minimongus_nobag = this->_getAmountForProcess(this->_process[CLR_MINIMONGUS_NOBAG]);
 	unsigned int total = clr_amongus + clr_minimongus + clr_amongus_nobag + clr_minimongus_nobag;
+	
 	if (logfile) {
 		std::stringstream ss;
 		ss << "AmongUs " << clr_amongus << "\n"
@@ -593,5 +584,6 @@ unsigned int AmongUsDetector::getAmount(const char *logfile) const {
 		log << ss.str();
 		log.close();
 	}
+	
 	return total;
 }

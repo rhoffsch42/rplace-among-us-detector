@@ -164,6 +164,7 @@ private:
 	ImageLoader			_image;
 	std::string			_filename;
 
+	unsigned int		_getAmountForProcess(const MatchProcess& process) const;
 	void				_applyCoordinates(const std::vector<Coo>& coos, uint16_t flags);
 	void				_applyFullAmongus(const Coo& coo, uint16_t flags);
 };
