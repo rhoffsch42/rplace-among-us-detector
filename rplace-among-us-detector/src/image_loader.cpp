@@ -42,9 +42,9 @@ ImageLoader::ImageLoader() {
 	this->colors.push_back(Color(255, 255, 255));
 
 	#ifdef QUICK_AND_DIRTY_ACCESS // O(1) access of colors by id
-	this->colorsId.resize(0x00ffffff + 1u);// 16.777216 MBytes
+	this->colorsId.resize(MAGIC_ID_ALLOC);
 	for (int i = 0; i < this->colors.size(); i++) {
-		this->colorsId[COLOR_UINT_CAST(this->colors[i])] = i;
+		this->colorsId[COLOR_UINT_CAST(this->colors[i])/MAGIC_DIVIDER] = i;
 	}
 	#else // very slow map
 	for (int i = 0; i < this->colors.size(); i++) {
@@ -140,7 +140,7 @@ void ImageLoader::_convertImage(std::vector<uint8_t>& dst, const std::string& fi
 			image_data[x + 1],
 			image_data[x + 2]);
 		#ifdef QUICK_AND_DIRTY_ACCESS
-		dst[x / 4] = this->colorsId[COLOR_UINT_CAST(c)];
+		dst[x / 4] = this->colorsId[COLOR_UINT_CAST(c)/MAGIC_DIVIDER];
 		#else
 		dst[x / 4] = this->colorsId[c];
 		#endif
@@ -178,7 +178,7 @@ void ImageLoader::_buildColors(const std::vector<unsigned char>& image_data) {
 		std::cout << "wrong amount of colors, should be 32\n";
 		std::exit(2);
 	}
-	//prebuilt code
+	//prebuilt code (not up to date)
 	int i = 0;
 	for (auto c : colors) {
 		this->colors.push_back(Color(c.r, c.g, c.b));

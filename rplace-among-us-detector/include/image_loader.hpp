@@ -16,6 +16,9 @@ struct Color {
 	unsigned char b = 0;
 	//unsigned char a = 0;
 };
+//see README.md for more info
+#define MAGIC_DIVIDER	16395
+#define MAGIC_ID_ALLOC	1024
 
 #define COLOR_UINT_CAST(X) ((*reinterpret_cast<unsigned int*>(&(X))) & 0x00ffffff)
 #define QUICK_AND_DIRTY_ACCESS
