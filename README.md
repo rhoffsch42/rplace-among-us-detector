@@ -34,9 +34,9 @@ For the last node of a chain (CLR_...), the surrounding (ie background) of the p
 A pixel is represented with 3 colors (RGB) :
 ```cpp
 Color {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
     //...
 }
 ```
